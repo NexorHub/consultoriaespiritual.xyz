@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ethus - Roblox Script Hub</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <meta name="description" content="Encontre scripts de vários jogos Roblox reunidos em um hub rápido e fácil de usar.">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0f0f0f;
+            --bg-secondary: #1a1a1a;
+            --bg-card: #1f1f1f;
+            --border-color: #2a2a2a;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --text-tertiary: #666666;
+            --accent: #4a9eff;
+            --accent-hover: #5fadff;
+            --shadow: rgba(0, 0, 0, 0.5);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Banner */
+        .header-banner {
+            width: 100%;
+            margin-bottom: 2rem;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .banner-image {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover;
+            max-height: 250px;
+        }
+
+        header {
+            padding: 3rem 0 2rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .logo-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 2px solid var(--border-color);
+        }
+
+        .header-text {
+            flex: 1;
+        }
+
+        .logo {
+            font-size: 1.75rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .subtitle {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .description {
+            font-size: 0.9rem;
+            color: var(--text-tertiary);
+        }
+
+        /* Tutorial Section */
+        .tutorial-section {
+            margin: 1.5rem 0;
+        }
+
+        .tutorial-card {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 1.25rem 1.5rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .tutorial-card:hover {
+            background: var(--bg-secondary);
+            border-color: #ff0000;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 0, 0, 0.2);
+        }
+
+        .tutorial-icon {
+            background: linear-gradient(135deg, #ff0000 0%, #cc0000 100%);
+            width: 48px;
+            height: 48px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .tutorial-icon svg {
+            color: #ffffff;
+        }
+
+        .tutorial-content {
+            flex: 1;
+        }
+
+        .tutorial-title {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .tutorial-description {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .tutorial-arrow {
+            color: var(--text-tertiary);
+            transition: all 0.3s ease;
+        }
+
+        .tutorial-card:hover .tutorial-arrow {
+            color: #ff0000;
+            transform: translateX(4px);
+        }
+
+        .search-section {
+            padding: 2.5rem 0;
+            position: sticky;
+            top: 0;
+            background: var(--bg-primary);
+            z-index: 100;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .search-wrapper {
+            position: relative;
+            max-width: 500px;
+        }
+
+        .search-container {
+            position: relative;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .search-container:focus-within {
+            border-color: var(--accent);
+            background: var(--bg-card);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-tertiary);
+            width: 18px;
+            height: 18px;
+            pointer-events: none;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 0.875rem 1rem 0.875rem 3rem;
+            background: transparent;
+            border: none;
+            color: var(--text-primary);
+            font-family: inherit;
+            font-size: 0.95rem;
+            outline: none;
+        }
+
+        .search-box::placeholder {
+            color: var(--text-tertiary);
+        }
+
+        .games-container {
+            padding: 2rem 0 4rem;
+        }
+
+        .game-category {
+            margin-bottom: 3.5rem;
+        }
+
+        .category-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .game-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 10px;
+            object-fit: cover;
+        }
+
+        .category-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .scripts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1rem;
+        }
+
+        .script-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .script-card:hover {
+            background: var(--bg-secondary);
+            border-color: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px var(--shadow);
+        }
+
+        .script-name {
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .script-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.25rem;
+            background: var(--accent);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .script-link:hover {
+            background: var(--accent-hover);
+            transform: translateX(2px);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-secondary);
+        }
+
+        .no-results svg {
+            margin: 0 auto 1rem;
+            opacity: 0.5;
+        }
+
+        footer {
+            text-align: center;
+            padding: 3rem 0 2rem;
+            color: var(--text-tertiary);
+            border-top: 1px solid var(--border-color);
+            margin-top: 4rem;
+        }
+
+        /* Loading */
+        .loading {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-secondary);
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            margin: 0 auto 1rem;
+            border: 4px solid var(--border-color);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 1rem;
+            }
+
+            .scripts-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .logo {
+                font-size: 1.5rem;
+            }
+
+            .category-title {
+                font-size: 1.25rem;
+            }
+
+            .logo-image {
+                width: 60px;
+                height: 60px;
+            }
+
+            .tutorial-card {
+                padding: 1rem;
+                gap: 0.75rem;
+            }
+
+            .tutorial-icon {
+                width: 40px;
+                height: 40px;
+            }
+
+            .tutorial-title {
+                font-size: 0.95rem;
+            }
+
+            .tutorial-description {
+                font-size: 0.8rem;
+            }
+
+            .search-section {
+                padding: 1.5rem 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container" style="padding-top: 2rem;">
+        <!-- Banner -->
+        <div class="header-banner">
+            <img src="https://yt3.googleusercontent.com/OrrAA3mn45ESKrHgn7nZeWt9Lg6_kJ-pxP1FkTWW1k_T3VeHlcuTjCBS60Ct6gy-AZkdbS68kA=w1060-fcrop64=1,00005a57ffffa5a8-k-c0xffffffff-no-nd-rj" alt="Ethus Banner" class="banner-image">
+        </div>
+
+        <header>
+            <div class="header-content">
+                <img src="https://yt3.googleusercontent.com/xYhMqiKfC6gq7KwmwB4JtuYNSw_6ZeM2ibsdeFqr5HxnOuK7wY1d_YAcZhsddbxhfq_d6zVUfw=s160-c-k-c0x00ffffff-no-rj" alt="Ethus Logo" class="logo-image">
+                <div class="header-text">
+                    <h1 class="logo">Ethus Scripts</h1>
+                    <p class="subtitle">Scripts & Executores Mobile</p>
+                </div>
+            </div>
+            <p class="description">⬇️O único canal brasileiro que reune os melhores scripts do momento SEM KEY & ATUALIZADOS!!✅</p>
+        </header>
+
+        <!-- Tutorial Card -->
+        <div class="tutorial-section">
+            <a href="https://youtu.be/m5yowENKbpY?si=N4qyaao0AZiVJfc4" target="_blank" class="tutorial-card">
+                <div class="tutorial-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17"/>
+                        <path d="m10 15 5-3-5-3z"/>
+                    </svg>
+                </div>
+                <div class="tutorial-content">
+                    <div class="tutorial-title">📚 Como passar no encurtador</div>
+                    <div class="tutorial-description">Assista ao tutorial completo</div>
+                </div>
+                <div class="tutorial-arrow">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M5 12h14"></path>
+                        <path d="m12 5 7 7-7 7"></path>
+                    </svg>
+                </div>
+            </a>
+        </div>
+
+        <div class="search-section">
+            <div class="search-wrapper">
+                <div class="search-container">
+                    <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.3-4.3"></path>
+                    </svg>
+                    <input 
+                        type="text" 
+                        class="search-box" 
+                        id="searchInput" 
+                        placeholder="Pesquise por nome de jogo ou script ..."
+                        autocomplete="off"
+                    >
+                </div>
+            </div>
+        </div>
+
+        <div class="games-container" id="gamesContainer">
+            <div class="loading">
+                <div class="spinner"></div>
+                <p>Carregando scripts...</p>
+            </div>
+        </div>
+
+        <div class="no-results hidden" id="noResults">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <path d="m21 21-4.3-4.3"></path>
+            </svg>
+            <p>Nenhum script encontrado</p>
+        </div>
+
+        <footer>
+            <p>&copy; 2025 Ethus. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        // ===================================================================
+        // CARREGAR SCRIPTS DA API LOCAL
+        // ===================================================================
+        
+        let allScriptsData = [];
+
+        // Carregar scripts ao iniciar
+        async function loadScripts() {
+            try {
+                const response = await fetch('/api/scripts');
+                const data = await response.json();
+                
+                if (data.success) {
+                    allScriptsData = data.data;
+                    renderScripts(allScriptsData);
+                } else {
+                    showError('Erro ao carregar scripts');
+                }
+            } catch (error) {
+                console.error('Erro ao carregar scripts:', error);
+                showError('Não foi possível carregar os scripts');
+            }
+        }
+
+        // Renderizar scripts no DOM
+        function renderScripts(scripts) {
+            const container = document.getElementById('gamesContainer');
+            container.innerHTML = '';
+
+            // Agrupar scripts por jogo
+            const gameGroups = {};
+            scripts.forEach(script => {
+                if (!gameGroups[script.gameId]) {
+                    gameGroups[script.gameId] = {
+                        name: script.game,
+                        icon: script.gameIcon,
+                        scripts: []
+                    };
+                }
+                gameGroups[script.gameId].scripts.push(script);
+            });
+
+            // Renderizar cada jogo
+            Object.keys(gameGroups).forEach(gameId => {
+                const game = gameGroups[gameId];
+                const gameDiv = createGameCategory(gameId, game);
+                container.appendChild(gameDiv);
+            });
+
+            // Inicializar busca após renderizar
+            initializeSearch();
+        }
+
+        // Criar categoria de jogo
+        function createGameCategory(gameId, game) {
+            const div = document.createElement('div');
+            div.className = 'game-category';
+            div.setAttribute('data-game', game.name);
+
+            div.innerHTML = `
+                <div class="category-header">
+                    <img src="${game.icon}" 
+                         alt="${game.name}"
+                         class="game-icon"
+                         onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2240%22 height=%2240%22 viewBox=%220 0 40 40%22%3E%3Crect width=%2240%22 height=%2240%22 fill=%22%231f1f1f%22/%3E%3C/svg%3E'">
+                    <h2 class="category-title">${game.name}</h2>
+                </div>
+                <div class="scripts-grid">
+                    ${game.scripts.map(script => createScriptCard(script)).join('')}
+                </div>
+            `;
+
+            return div;
+        }
+
+        // Criar card de script
+        function createScriptCard(script) {
+            return `
+                <div class="script-card" data-search="${script.name}">
+                    <div class="script-name">${script.name}</div>
+                    <a href="${script.url}" class="script-link" data-script-id="${script.id}" data-script-name="${script.name}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" 
+                             viewBox="0 0 24 24" fill="none" stroke="currentColor" 
+                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M15 3h6v6"></path>
+                            <path d="M10 14 21 3"></path>
+                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                        </svg>
+                        Get Script
+                    </a>
+                </div>
+            `;
+        }
+
+        // Mostrar erro
+        function showError(message) {
+            const container = document.getElementById('gamesContainer');
+            container.innerHTML = `
+                <div class="no-results">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="8" x2="12" y2="12"></line>
+                        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                    </svg>
+                    <p>${message}</p>
+                </div>
+            `;
+        }
+
+        // ===================================================================
+        // BUSCA
+        // ===================================================================
+        
+        function initializeSearch() {
+            const searchInput = document.getElementById('searchInput');
+            const allCategories = document.querySelectorAll('.game-category');
+            const allCards = document.querySelectorAll('.script-card');
+            const noResults = document.getElementById('noResults');
+
+            searchInput.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase().trim();
+                
+                if (searchTerm === '') {
+                    allCategories.forEach(cat => cat.classList.remove('hidden'));
+                    allCards.forEach(card => card.classList.remove('hidden'));
+                    noResults.classList.add('hidden');
+                    return;
+                }
+
+                let hasResults = false;
+
+                allCategories.forEach(category => {
+                    const cards = category.querySelectorAll('.script-card');
+                    let categoryHasResults = false;
+
+                    cards.forEach(card => {
+                        const searchData = card.getAttribute('data-search').toLowerCase();
+                        const scriptName = card.querySelector('.script-name').textContent.toLowerCase();
+                        const categoryName = category.querySelector('.category-title').textContent.toLowerCase();
+                        
+                        if (searchData.includes(searchTerm) || 
+                            scriptName.includes(searchTerm) || 
+                            categoryName.includes(searchTerm)) {
+                            card.classList.remove('hidden');
+                            categoryHasResults = true;
+                            hasResults = true;
+                        } else {
+                            card.classList.add('hidden');
+                        }
+                    });
+
+                    if (categoryHasResults) {
+                        category.classList.remove('hidden');
+                    } else {
+                        category.classList.add('hidden');
+                    }
+                });
+
+                if (!hasResults) {
+                    noResults.classList.remove('hidden');
+                } else {
+                    noResults.classList.add('hidden');
+                }
+            });
+        }
+
+        // ===================================================================
+        // ANALYTICS
+        // ===================================================================
+        
+        async function trackScriptClick(scriptId, scriptName) {
+            try {
+                await fetch('/api/analytics', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        event: 'script_click',
+                        scriptName: scriptName,
+                        scriptId: scriptId,
+                        timestamp: new Date().toISOString()
+                    })
+                });
+            } catch (error) {
+                console.log('Analytics não disponível');
+            }
+        }
+
+        // Adicionar tracking aos links (delegação de eventos)
+        document.addEventListener('click', function(e) {
+            if (e.target.closest('.script-link')) {
+                const link = e.target.closest('.script-link');
+                const scriptId = parseInt(link.getAttribute('data-script-id'));
+                const scriptName = link.getAttribute('data-script-name');
+                trackScriptClick(scriptId, scriptName);
+            }
+        });
+
+        // ===================================================================
+        // INICIALIZAÇÃO
+        // ===================================================================
+        
+        document.addEventListener('DOMContentLoaded', loadScripts);
+    </script>
+</body>
+</html>
